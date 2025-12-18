@@ -1,34 +1,35 @@
-import streamlit
+import streamlit as st
 import numpy as np
 import joblib as jb
 
 # -----------------------------
-# Load saved model & scaler
+# Load Model & Scaler
 # -----------------------------
-model=jb.load("/home/intellect/Documents/Data_Scientist/KNN-Project/Social_network-ads.pkl")
-scaler=jb.load("/home/intellect/Documents/Data_Scientist/KNN-Project/scaler.pkl")
+model = jb.load("Social_network-ads.pkl")
+scaler = jb.load("scaler.pkl")
 
 # -----------------------------
-# Title
+# Streamlit UI
 # -----------------------------
-st.title("📱 Social Network Ads - KNN Prediction")
-st.write("Predict whether a user will purchase or not")
+st.set_page_config(page_title="KNN Purchase Prediction", layout="centered")
 
-# -----------------------------
-# User Input
-# -----------------------------
-age = st.number_input("Age", min_value=18, max_value=100, value=30)
-salary = st.number_input("Estimated Salary", min_value=10000, max_value=200000, value=87000)
+st.title("🛒 Social Network Ads Prediction")
+st.write("Predict whether a user will purchase a product.")
 
-# -----------------------------
-# Prediction
-# -----------------------------
+# User inputs
+age = st.number_input("Enter Age", min_value=18, max_value=70, value=30)
+salary = st.number_input("Enter Estimated Salary", min_value=10000, max_value=200000, value=50000)
+
+# Predict button
 if st.button("Predict"):
-    new_data = np.array([[age, salary]])
-    new_data_scaled = scaler.transform(new_data)
-    prediction = model.predict(new_data_scaled)
+    # Prepare input
+    input_data = np.array([[age, salary]])
+    input_scaled = scaler.transform(input_data)
 
-    if prediction[0] == 1:
-        st.success("✅ User will PURCHASE")
+    prediction = model.predict(input_scaled)[0]
+
+    # Output
+    if prediction == 1:
+        st.success("✅ Prediction: Purchased")
     else:
-        st.error("❌ User will NOT purchase")
+        st.error("❌ Prediction: Not Purchased")
