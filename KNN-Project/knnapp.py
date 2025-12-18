@@ -1,6 +1,6 @@
 import streamlit as st
 import numpy as np
-import joblib
+import joblib as jb
 
 # -----------------------------
 # Load saved model & scaler
@@ -26,7 +26,7 @@ salary = st.number_input("Estimated Salary", min_value=10000, max_value=200000, 
 if st.button("Predict"):
     new_data = np.array([[age, salary]])
     new_data_scaled = scaler.transform(new_data)
-    prediction = knn.predict(new_data_scaled)
+    prediction = model.predict(new_data_scaled)
 
     if prediction[0] == 1:
         st.success("✅ User will PURCHASE")
