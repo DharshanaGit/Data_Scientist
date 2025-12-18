@@ -5,7 +5,7 @@ import joblib as jb
 # -----------------------------
 # Load Model & Scaler
 # -----------------------------
-model = jb.load("Social_network-ads.pkl")
+model = jb.load("Social_network_ads.pkl")
 scaler = jb.load("scaler.pkl")
 
 # -----------------------------
