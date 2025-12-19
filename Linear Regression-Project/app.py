@@ -3,8 +3,8 @@ import numpy as np
 import joblib
 
 # ---------------- LOAD MODEL & SCALER ----------------
-model = joblib.load("/home/intellect/Documents/Data_Scientist/Tasks/Students_final_score.pkl")
-scaler = joblib.load("/home/intellect/Documents/Data_Scientist/Tasks/scaler.pkl")
+model = joblib.load("/home/intellect/Documents/Data_Scientist/Linear Regression-Project/Students_final_score.pkl")
+scaler = joblib.load("/home/intellect/Documents/Data_Scientist/Linear Regression-Project/scaler.pkl")
 
 st.set_page_config(page_title="Student Final Score Predictor", layout="centered")
 st.title("🎓 Student Final Score Prediction")
@@ -36,6 +36,11 @@ Sleep_Hours = st.slider(
 Motivation_Level = st.slider(
     "Motivation Level (1-10)",
     min_value=1, max_value=10, value=6
+)
+
+Parental_Education = st.selectbox(
+    "Parental Education Level",
+    ["None", "Primary", "Secondary", "Graduate", "Postgraduate"]
 )
 
 Internet_Access = st.selectbox(
