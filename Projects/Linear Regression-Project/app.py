@@ -3,8 +3,8 @@ import numpy as np
 import joblib
 
 # ---------------- LOAD MODEL & SCALER ----------------
-model = joblib.load("/home/intellect/Documents/Data_Scientist/Linear Regression-Project/Students_final_score.pkl")
-scaler = joblib.load("/home/intellect/Documents/Data_Scientist/Linear Regression-Project/scaler.pkl")
+model = joblib.load("Students_final_score.pkl")
+scaler = joblib.load("scaler.pkl")
 
 st.set_page_config(page_title="Student Final Score Predictor", layout="centered")
 st.title("🎓 Student Final Score Prediction")
@@ -38,57 +38,27 @@ Motivation_Level = st.slider(
     min_value=1, max_value=10, value=6
 )
 
-Parental_Education = st.selectbox(
-    "Parental Education Level",
-    ["None", "Primary", "Secondary", "Graduate", "Postgraduate"]
-)
-
-Internet_Access = st.selectbox(
-    "Internet Access at Home",
-    ["No", "Yes"]
-)
-
-Extra_Curricular = st.slider(
-    "Extra Curricular Activities (hours/week)",
-    0, 20, 5
-)
-
-Stress_Level = st.slider(
-    "Stress Level (1-10)",
-    1, 10, 5
-)
-
-Health_Score = st.slider(
-    "Health Score (1-10)",
-    1, 10, 7
-)
 
 # ---------------- PREDICTION ----------------
 if st.button("🔮 Predict Final Score"):
-    # Use ONLY the 5 features the model was trained on
-    input_data = np.array([[
-    Previous_Sem_Score,
-    Study_Hours_per_Week,
-    Attendance_Percentage,
-    Sleep_Hours,
-    Motivation_Level,
-    Parental_Education,
-    Internet_Access,
-    Extra_Curricular,
-    Stress_Level,
-    Health_Score
-]])
 
-    
-    # Debug info (optional - remove later)
-    st.write(f"Input shape: {input_data.shape}")
-    
-    # Apply StandardScaler
+    # EXACT 5 FEATURES ONLY
+    input_data = np.array([[
+        Previous_Sem_Score,
+        Study_Hours_per_Week,
+        Attendance_Percentage,
+        Sleep_Hours,
+        Motivation_Level
+    ]])
+
+    # Scale
     input_scaled = scaler.transform(input_data)
+
+    # Predict
     prediction = model.predict(input_scaled)[0]
-    
-    st.success(f"🎯 **Predicted Final Score: {prediction:.2f}**")
-    
+
+    st.success(f"🎯 Predicted Final Score: {prediction:.2f}")
+
     # Interpretation
     if prediction >= 85:
         st.info("🌟 Excellent performance expected!")
