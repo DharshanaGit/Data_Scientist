@@ -35,7 +35,7 @@ if st.button("Predict Survival"):
     # ✅ MUST match training feature names & order
     input_df = pd.DataFrame(
         [[passenger_id, pclass, age, fare, sex_encoded]],
-        columns=["PassengerId", "Pclass", "Age", "Fare", "Sex"]
+        columns=["PassengerId", "Pclass", "Age", "Fare", "Sex_encoded"]
     )
 
     # Scale input
